@@ -1,0 +1,28 @@
+{
+  "name": "dw_wow_api_new",
+  "version": "1.0.0",
+  "description": "Api untuk frontend react wow",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "api",
+    "wow"
+  ],
+  "author": "Muhamad Akbar Afriansyah",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "demon": "^1.4.4",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7",
+    "sequelize": "^6.5.0",
+    "sequelize-cli": "^6.2.0"
+  }
+}

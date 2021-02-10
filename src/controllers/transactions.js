@@ -1,13 +1,15 @@
 const { Transactions, Users } = require("../../models");
 
 exports.addTransaction = async (req, res) => {
+  const { files } = req;
+
   try {
     const transaction = await Transactions.create({
       users: req.body.userId,
-      transferProof: req.body.transferProof,
-      remainingActive: 30,
-      userStatus: "Active",
-      paymentStatus: "Approved",
+      transferProof: files.transferProof[0].filename,
+      remainingActive: 0,
+      userStatus: "Non Active",
+      paymentStatus: "Pending",
     });
 
     const users = await Users.findOne({
@@ -19,7 +21,7 @@ exports.addTransaction = async (req, res) => {
       },
     });
 
-    const transactionNew = await Transactions.findOne({
+    const transactionUpdated = await Transactions.findOne({
       where: {
         id: transaction.id,
       },
@@ -28,12 +30,12 @@ exports.addTransaction = async (req, res) => {
       },
     });
 
-    await (transactionNew["users"] = users);
+    await (transactionUpdated["users"] = users);
 
     res.send({
       status: "success",
       data: {
-        transaction: transactionNew
+        transaction: transactionUpdated
       },
     });
   } catch (err) {

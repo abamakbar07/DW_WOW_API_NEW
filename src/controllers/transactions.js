@@ -19,12 +19,21 @@ exports.addTransaction = async (req, res) => {
       },
     });
 
-    await (transaction["users"] = users);
+    const transactionNew = await Transactions.findOne({
+      where: {
+        id: transaction.id,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    await (transactionNew["users"] = users);
 
     res.send({
       status: "success",
       data: {
-        transaction: transaction,
+        transaction: transactionNew
       },
     });
   } catch (err) {
@@ -73,7 +82,7 @@ exports.editTransaction = async (req, res) => {
         id: transactionUpdated.users,
       },
       attributes: {
-        exclude: ["email", "createdAt", "updatedAt"],
+        exclude: ["email", "password", "createdAt", "updatedAt"],
       },
     });
 
@@ -162,7 +171,7 @@ exports.getTransactions = async (req, res) => {
           id: transaction[i].users,
         },
         attributes: {
-          exclude: ["email", "createdAt", "updatedAt", "password"],
+          exclude: ["email", "password", "createdAt", "updatedAt"],
         },
       });
       transaction[i].users = user;

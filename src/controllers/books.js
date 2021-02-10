@@ -129,6 +129,13 @@ exports.editBook = async (req, res) => {
 exports.deleteBook = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const bookDetail = await Books.findOne({
+      where: {
+        id,
+      }
+    })
+
     const book = await Books.destroy({
       where: {
         id,
@@ -143,9 +150,7 @@ exports.deleteBook = async (req, res) => {
 
     res.send({
       status: "success",
-      data: {
-        id,
-      },
+      message: `The book '${bookDetail.title}' with id ${bookDetail.id} successfuly deleted`
     });
   } catch (err) {
     console.log(err);

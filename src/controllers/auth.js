@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
       status: "success",
       message: "You succesfully registered",
       data: {
-        chanel: {
+        user: {
           email: user.email,
           token,
         }
@@ -124,8 +124,8 @@ exports.login = async (req, res) => {
     res.send({
       status: "success",
       message: "Login Success",
-      data: {
-        chanel: {
+      data: { 
+        user: {
             email,
             token,
         },

@@ -26,12 +26,14 @@ const {
    login
 } = require("../controllers/auth");
 
+const { uploadBookNew } = require("../middlewares/uploadBook");
+
 router.get("/users", getUsers);
 router.delete("/user/:id", deleteUser);
 
 router.get("/books", getBooks);
 router.get("/book/:id", getBookDetail);
-router.post("/book", addBook);
+router.post("/book", uploadBookNew("imageFile", "bookFile"), addBook);
 router.patch("/book/:id", editBook);
 router.delete("/book/:id", deleteBook);
 

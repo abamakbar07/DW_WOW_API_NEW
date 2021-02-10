@@ -21,7 +21,10 @@ const {
    getTransactions,
 } = require("../controllers/transactions");
 
-const { register } = require("../controllers/auth");
+const {
+   register,
+   login
+} = require("../controllers/auth");
 
 router.get("/users", getUsers);
 router.delete("/user/:id", deleteUser);
@@ -38,5 +41,6 @@ router.post("/transaction", addTransaction);
 router.patch("/transaction/:id", editTransaction);
 
 router.post("/register", register);
+router.post("/login", login);
 
 module.exports = router;

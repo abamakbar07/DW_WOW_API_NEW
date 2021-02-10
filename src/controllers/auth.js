@@ -126,10 +126,8 @@ exports.login = async (req, res) => {
       message: "Login Success",
       data: {
         chanel: {
-          user: {
             email,
             token,
-          },
         },
       },
     });

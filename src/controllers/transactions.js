@@ -15,7 +15,7 @@ exports.addTransaction = async (req, res) => {
         id: req.body.userId,
       },
       attributes: {
-        exclude: ["email", "createdAt", "updatedAt"],
+        exclude: ["email", "createdAt", "updatedAt", "password"],
       },
     });
 
@@ -112,12 +112,12 @@ exports.getTransaction = async (req, res) => {
       });
     }
 
-    const users = await User.findOne({
+    const users = await Users.findOne({
       where: {
         id: transaction.users,
       },
       attributes: {
-        exclude: ["email", "createdAt", "updatedAt"],
+        exclude: ["email", "createdAt", "updatedAt", "password"],
       },
     });
 
@@ -157,12 +157,12 @@ exports.getTransactions = async (req, res) => {
     // await (transaction["users"] = users);
 
     for (i = 0; i < transaction.length; i++) {
-      const user = await User.findOne({
+      const user = await Users.findOne({
         where: {
           id: transaction[i].users,
         },
         attributes: {
-          exclude: ["email", "createdAt", "updatedAt"],
+          exclude: ["email", "createdAt", "updatedAt", "password"],
         },
       });
       transaction[i].users = user;
@@ -171,7 +171,7 @@ exports.getTransactions = async (req, res) => {
     res.send({
       status: "success",
       data: {
-        transaction: transaction,
+        transactions: transaction,
       },
     });
   } catch (err) {

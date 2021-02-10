@@ -1,6 +1,6 @@
 const multer = require("multer");
 
-exports.uploadBookNew = (imageFile, epubFile) => {
+exports.uploadBookNew = (bookThumbnail, bookFile) => {
   //initialisasi multer diskstorage
   //menentukan destionation file diupload
   //menentukan nama file (rename agar tidak ada nama file ganda)
@@ -15,7 +15,7 @@ exports.uploadBookNew = (imageFile, epubFile) => {
 
   //function untuk filter / validasi file berdasarkan type
   const fileFilter = function (req, file, cb) {
-    if (file.fieldname === imageFile) {
+    if (file.fieldname === bookThumbnail) {
       if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
         req.fileValidationError = {
           message: "Only image files are allowed!",
@@ -24,7 +24,7 @@ exports.uploadBookNew = (imageFile, epubFile) => {
       }
     }
 
-    if (file.fieldname === epubFile) {
+    if (file.fieldname === bookFile) {
       if (!file.originalname.match(/\.(epub|EPUB)$/)) {
         req.fileValidationError = {
           message: "Only Epub files are allowed!",
@@ -48,11 +48,11 @@ exports.uploadBookNew = (imageFile, epubFile) => {
     },
   }).fields([
     {
-      name: imageFile,
+      name: bookThumbnail,
       maxCount: 1,
     },
     {
-      name: epubFile,
+      name: bookFile,
       maxCount: 1,
     },
   ]); //fields digunakan karena file yang diupload lebih dari 1 fields

@@ -33,7 +33,8 @@ router.delete("/user/:id", deleteUser);
 
 router.get("/books", getBooks);
 router.get("/book/:id", getBookDetail);
-router.post("/book", uploadBookNew("imageFile", "bookFile"), addBook);
+router.post("/book", uploadBookNew("bookThumbnail", "bookFile"), addBook);
+// router.post("/book", addBook);
 router.patch("/book/:id", editBook);
 router.delete("/book/:id", deleteBook);
 

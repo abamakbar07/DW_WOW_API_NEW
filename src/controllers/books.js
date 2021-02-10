@@ -1,4 +1,6 @@
-const { Books } = require("../../models");
+const {
+  Books
+} = require("../../models");
 
 exports.getBooks = async (req, res) => {
   try {
@@ -24,7 +26,9 @@ exports.getBooks = async (req, res) => {
 
 exports.getBookDetail = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
     const book = await Books.findOne({
       where: {
         id: id,
@@ -56,12 +60,25 @@ exports.getBookDetail = async (req, res) => {
 };
 
 exports.addBook = async (req, res) => {
+  const {
+    body,
+    files
+  } = req;
+
+  const {
+    title,
+  } = req.body;
+
   try {
-    await Books.create(req.body);
+    const bookAdd = await Books.create({
+      ...body,
+      bookThumbnail: files.bookThumbnail[0].filename,
+      bookFile: files.bookFile[0].filename,
+    });
 
     const book = await Books.findOne({
       where: {
-        title: req.body.title,
+        title,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -84,7 +101,9 @@ exports.addBook = async (req, res) => {
 
 exports.editBook = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
     const book = await Books.findOne({
       where: {
         id,
@@ -93,6 +112,7 @@ exports.editBook = async (req, res) => {
 
     if (!book) {
       return res.send({
+        status: "failed",
         message: `Book with id ${id} Not Existed`,
       });
     }
@@ -128,7 +148,9 @@ exports.editBook = async (req, res) => {
 
 exports.deleteBook = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
 
     const bookDetail = await Books.findOne({
       where: {
@@ -144,6 +166,7 @@ exports.deleteBook = async (req, res) => {
 
     if (!book) {
       return res.send({
+        status: "failed",
         message: `Book with id ${id} Not Existed`,
       });
     }

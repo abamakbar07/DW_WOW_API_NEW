@@ -17,7 +17,7 @@ exports.addTransaction = async (req, res) => {
         id: req.body.userId,
       },
       attributes: {
-        exclude: ["email", "createdAt", "updatedAt", "password"],
+        exclude: ["email", "createdAt", "updatedAt", "password", "isAdmin"],
       },
     });
 
@@ -84,7 +84,7 @@ exports.editTransaction = async (req, res) => {
         id: transactionUpdated.users,
       },
       attributes: {
-        exclude: ["email", "password", "createdAt", "updatedAt"],
+        exclude: ["email", "password", "createdAt", "updatedAt", "isAdmin"],
       },
     });
 
@@ -128,7 +128,7 @@ exports.getTransaction = async (req, res) => {
         id: transaction.users,
       },
       attributes: {
-        exclude: ["email", "createdAt", "updatedAt", "password"],
+        exclude: ["email", "createdAt", "updatedAt", "password", "isAdmin"],
       },
     });
 
@@ -173,7 +173,7 @@ exports.getTransactions = async (req, res) => {
           id: transaction[i].users,
         },
         attributes: {
-          exclude: ["email", "password", "createdAt", "updatedAt"],
+          exclude: ["email", "password", "createdAt", "updatedAt", "isAdmin"],
         },
       });
       transaction[i].users = user;

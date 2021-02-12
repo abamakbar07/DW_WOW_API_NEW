@@ -3,7 +3,8 @@ const router = express.Router();
 
 const {
    getUsers,
-   deleteUser
+   deleteUser,
+   getUser
 } = require("../controllers/users");
 
 const {
@@ -26,22 +27,31 @@ const {
    login
 } = require("../controllers/auth");
 
-const { uploadBookNew } = require("../middlewares/uploadBook");
-const { uploadTransactionProof } = require("../middlewares/uploadTransaction");
+const {
+   uploadBookNew
+} = require("../middlewares/uploadBook");
+const {
+   uploadTransactionProof
+} = require("../middlewares/uploadTransaction");
 
-router.get("/users", getUsers);
+const {
+   transactionAuth, adminAuth
+} = require("../middlewares/auth");
+
+router.get("/users", adminAuth, getUsers);
+router.get("/user/:id", getUser);
 router.delete("/user/:id", deleteUser);
 
 router.get("/books", getBooks);
 router.get("/book/:id", getBookDetail);
-router.post("/book", uploadBookNew("bookThumbnail", "bookFile"), addBook);
-router.patch("/book/:id", editBook);
-router.delete("/book/:id", deleteBook);
+router.post("/book", uploadBookNew("bookThumbnail", "bookFile"), adminAuth, addBook);
+router.patch("/book/:id", adminAuth, editBook);
+router.delete("/book/:id", adminAuth, deleteBook);
 
-router.get("/transactions", getTransactions);
-router.get("/transaction/:id", getTransaction);
-router.post("/transaction", uploadTransactionProof("transferProof"), addTransaction);
-router.patch("/transaction/:id", editTransaction);
+router.get("/transactions", adminAuth, getTransactions);
+router.get("/transaction/:id", adminAuth, getTransaction);
+router.post("/transaction", uploadTransactionProof("transferProof"), transactionAuth, addTransaction);
+router.patch("/transaction/:id", adminAuth, editTransaction);
 
 router.post("/register", register);
 router.post("/login", login);

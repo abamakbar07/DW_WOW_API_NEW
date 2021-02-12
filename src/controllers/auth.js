@@ -6,6 +6,8 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
+  const isAdmin = false;
+
   try {
     const {
       fullname,
@@ -47,9 +49,10 @@ exports.register = async (req, res) => {
       fullname,
       email,
       password: hashedPassword,
+      isAdmin,
     });
 
-    const privateKey = process.env.SECRET_KEY;
+    const privateKey = isAdmin ? process.env.IS_ADMIN: process.env.IS_USER;
 
     const token = jwt.sign({
         id: user.id,
@@ -114,7 +117,7 @@ exports.login = async (req, res) => {
         message: "Your Credentials is not valid",
       });
 
-    const secretKey = process.env.SECRET_KEY;
+    const secretKey = user.isAdmin ? process.env.IS_ADMIN : process.env.IS_USER;
     const token = jwt.sign({
         id: user.id,
       },

@@ -6,7 +6,7 @@ exports.uploadBookNew = (bookThumbnail, bookFile) => {
   //menentukan nama file (rename agar tidak ada nama file ganda)
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "uploads"); //lokasih penyimpan file
+      cb(null, "uploads/books"); //lokasih penyimpan file
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + "-" + file.originalname); //rename nama file by date now + nama original
